@@ -1,4 +1,5 @@
 import express, { Response, Request, NextFunction } from 'express';
+var serveStatic = require('serve-static');
 import cors from 'cors';
 import { posts } from './routes/posts';
 import { AppError } from './typings/AppError';
@@ -29,3 +30,5 @@ app.use(
     res.send(JSON.stringify(formattedError));
   }
 );
+
+app.use('/posts', express.static(__dirname + '/posts'));
