@@ -3,7 +3,7 @@
 exports[`<PostComponent /> check to make sure nothing extra is rendered in PostItem component 1`] = `
 <View
   accessible={true}
-  focusable={false}
+  focusable={true}
   isTVSelectable={true}
   onClick={[Function]}
   onResponderGrant={[Function]}

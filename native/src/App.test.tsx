@@ -1,11 +1,11 @@
 import React from 'react';
 import renderer, { act, create } from 'react-test-renderer';
 
+
 import { App } from './App';
+import PostDetails from './components/PostDetails';
 import PostItem from './components/postItem';
 import PostList from './components/postList';
-
-jest.mock();
 
 const mockPostData = [
   {
@@ -16,17 +16,8 @@ const mockPostData = [
     },
     body: '# Three best friends taking on the world',
     published: new Date(),
-    onPress: () => {},
-  },
-  {
-    title: 'Harry Potter and the Chamber of Secrets',
-    author: {
-      id: '122',
-      name: 'JK Rowling',
-    },
-    body: '# Three best friends taking on the world',
-    published: new Date(),
-    onPress: () => {},
+    handleOnPressAuthor: () => {},
+    handleOnPressPost: () => {},
   },
 ];
 
@@ -47,7 +38,8 @@ describe('<PostComponent />', () => {
           author={mockPostData[0].author}
           body={mockPostData[0].body}
           publishedDate={mockPostData[0].published}
-          onPress={mockPostData[0].onPress}
+          handleOnPressAuthor={mockPostData[0].handleOnPressAuthor}
+          handleOnPressPost={mockPostData[0].handleOnPressPost}
         />
       );
     });
@@ -100,5 +92,12 @@ describe('<PostList />', () => {
         </RCTScrollView>
       </View>
     `);
+  });
+});
+
+describe('<PostDetails />', () => {
+  test('it renders correctly when there are multiple items', () => {
+    //TODO: figure out how to pass in navigation and route props to testing
+
   });
 });

@@ -1,21 +1,20 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 
 import PostList from './components/postList';
+import PostDetails from './components/postDetails';
+import { HomeStackParamList } from './HomeStackParamList';
+
+const Stack = createStackNavigator<HomeStackParamList>();
 
 export function App() {
   return (
-    <View style={styles.container}>
-      <PostList />
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Home" component={PostList} options={{header: () => null}}/>
+        <Stack.Screen name="Details" component={PostDetails} options={{title: 'Post Details'}}/>
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

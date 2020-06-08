@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {
+  Button,
   FlatList,
   StyleSheet,
   Text,
@@ -8,8 +9,14 @@ import {
 } from 'react-native';
 import { Posts, Post } from '../types';
 import PostItem from './postItem';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { HomeStackParamList } from '../HomeStackParamList';
 
-const PostList: React.FC = () => {
+type Props = {
+    navigation?: StackNavigationProp<HomeStackParamList, 'Home'>
+}
+
+const PostList: React.FC<Props> = ( {navigation} ) => {
   const [posts, setPosts] = useState<Posts | null>();
   const [displayingFilteredList, setDisplayingFilteredList] = useState<boolean>(
     false
@@ -56,6 +63,10 @@ const PostList: React.FC = () => {
     );
   };
 
+  const handleOnPressPost = (bodyText: string, titleText:string) => {
+    navigation.navigate('Details', { body: bodyText, title: titleText });
+  };
+
   return (
     <View style={styles.container}>
       <FlatList
@@ -67,7 +78,8 @@ const PostList: React.FC = () => {
             body={item.body}
             author={item.author}
             publishedDate={item.publishedAt}
-            onPress={searchFilterFunction}
+            handleOnPressAuthor={searchFilterFunction}
+            handleOnPressPost={handleOnPressPost}
           />
         )}
         keyExtractor={(item) => item.id}
