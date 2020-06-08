@@ -21,13 +21,13 @@ const PostItem: React.FC<Props> = ({
   title,
   publishedAt,
 }) => {
-
   const { colors } = useTheme();
+
   const getSummary = (body: string): string => {
     let summary = body.substring(2, body.indexOf('##'));
     return summary.trim();
   };
-
+  
   return (
     <TouchableOpacity
       style={styles(colors).post}

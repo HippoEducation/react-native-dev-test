@@ -1,14 +1,15 @@
 import {
   ActivityIndicator,
+  Button,
   FlatList,
   StyleSheet,
   Text,
-  TouchableOpacity,
   View,
 } from 'react-native';
 import React, { useEffect, useState } from 'react';
 
 import { HomeStackParamList } from '../HomeStackParamList';
+import { Platform } from 'react-native';
 import { Post } from '../../../api/src/data/posts'
 import PostItem from './postItem';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -30,7 +31,12 @@ const PostList: React.FC<Props> = ( {navigation} ) => {
   const getPosts = async () => {
     setIsLoading(true);
     try {
-      let response = await fetch('http://localhost:4000/posts');
+      //inelegant workaround for making sure the correct data is returned
+      let fetchurl =
+        Platform.OS === 'ios'
+          ? 'http://localhost:4000/posts'
+          : 'http://192.168.0.7:4000/posts';
+      let response = await fetch(fetchurl);
       let json = await response.json();
       let sortedPosts = await sortPostsByPublishedAt(json);
       setPostList(sortedPosts);
@@ -70,9 +76,11 @@ const PostList: React.FC<Props> = ( {navigation} ) => {
 
   const ShowAllPosts = () => {
     return (
-      <TouchableOpacity onPress={() => handleShowAllPosts()}>
-        <Text style={styles(colors).showAllPosts}>Show all Posts</Text>
-      </TouchableOpacity>
+      <Button
+        color={styles(colors).showAllPosts.color}
+        title={'Show All Posts'}
+        onPress={() => handleShowAllPosts()}
+      ></Button>
     );
   };
 
@@ -82,7 +90,7 @@ const PostList: React.FC<Props> = ( {navigation} ) => {
 
   return (
     <View style={styles(colors).container}>
-      <Text style={styles(colors).hintText}>Hint: Click the author name to see a filtered view</Text>
+      {!displayingFilteredList && <Text style={styles(colors).hintText}>Hint: Click the author name to see a filtered view</Text>}
       {isLoading && (
         <ActivityIndicator animating={isLoading} color="#a697db" size="large" />
       )}
