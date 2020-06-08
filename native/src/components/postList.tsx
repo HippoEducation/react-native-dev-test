@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from 'react';
 import {
   ActivityIndicator,
   FlatList,
@@ -7,10 +6,13 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import React, { useEffect, useState } from 'react';
+
+import { HomeStackParamList } from '../HomeStackParamList';
 import { Post } from '../../../api/src/data/posts'
 import PostItem from './postItem';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { HomeStackParamList } from '../HomeStackParamList';
+import { useTheme } from '@react-navigation/native';
 
 type Props = {
     navigation?: StackNavigationProp<HomeStackParamList, 'Home'>
@@ -22,6 +24,8 @@ const PostList: React.FC<Props> = ( {navigation} ) => {
   const [displayingFilteredList, setDisplayingFilteredList] = useState<boolean>(
     false
   );
+
+  const { colors } = useTheme();
 
   const getPosts = async () => {
     setIsLoading(true);
@@ -67,23 +71,20 @@ const PostList: React.FC<Props> = ( {navigation} ) => {
   const ShowAllPosts = () => {
     return (
       <TouchableOpacity onPress={() => handleShowAllPosts()}>
-        <Text style={styles.showAllPosts}>Show all Posts</Text>
+        <Text style={styles(colors).showAllPosts}>Show all Posts</Text>
       </TouchableOpacity>
     );
   };
 
   const handleOnPressPost = (bodyText: string, titleText:string) => {
-    navigation.navigate('Details', { body: bodyText, title: titleText });
+    navigation?.navigate('Details', { body: bodyText, title: titleText });
   };
 
   return (
-    <View style={styles.container}>
+    <View style={styles(colors).container}>
+      <Text style={styles(colors).hintText}>Hint: Click the author name to see a filtered view</Text>
       {isLoading && (
-        <ActivityIndicator
-          animating={isLoading}
-          color="#a697db"
-          size="large"
-        />
+        <ActivityIndicator animating={isLoading} color="#a697db" size="large" />
       )}
       <FlatList
         style={{ width: '100%' }}
@@ -105,14 +106,28 @@ const PostList: React.FC<Props> = ( {navigation} ) => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  showAllPosts: {
-    fontSize: 60,
-    top: 0,
-  },
-});
+const styles = (colors: {
+  background?: string;
+  border: any;
+  card: any;
+  primary?: string;
+  secondary?: string;
+  text: any;
+}) =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+    },
+    showAllPosts: {
+      color: colors.secondary,
+      fontSize: 60,
+      top: 0,
+    },
+    hintText: {
+      color: colors.secondary,
+      justifyContent: "center",
+      textAlign: "center"
+    },
+  });
 
 export default PostList;

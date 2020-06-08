@@ -1,40 +1,60 @@
-import React from 'react';
-import { Text, StyleSheet, View } from 'react-native';
+import { ScrollView, StyleSheet, Text } from 'react-native';
+
 import { HomeStackParamList } from '../HomeStackParamList';
+import React from 'react';
 import { RouteProp } from '@react-navigation/native';
+import { useTheme } from '@react-navigation/native';
 
 type Props = {
-    route: RouteProp<HomeStackParamList, 'Details'>
-}
+  route: RouteProp<HomeStackParamList, 'Details'>;
+};
 
-const PostDetails: React.FC<Props> = ({route}) => {
-    return (
-      <View>
-        <Text testID="title">{route.params.title}</Text>
-        <Text testID="body">{route.params.body}</Text>
-      </View>
-    );
-}
+const PostDetails: React.FC<Props> = ({ route }) => {
+  const { colors } = useTheme();
 
-const styles = StyleSheet.create({
-  post: {
-    flex: 1,
-    paddingVertical: 25,
-    paddingHorizontal: 15,
-    justifyContent: 'space-between',
-    borderBottomWidth: 1,
-    borderBottomColor: 'black',
-  },
-  postAuthor: {
-    bottom: 0,
-    fontSize: 15,
-  },
-  postDate: {},
-  postSummary: {},
-  postTitle: {
-    fontSize: 18,
-    flex: 1,
-  },
-});
+  return (
+    <ScrollView style={styles(colors).container}>
+      <Text style={styles(colors).postTitle}>{route.params.title}</Text>
+      <Text style={styles(colors).postBody}>{route.params.body}</Text>
+    </ScrollView>
+  );
+};
+
+const styles = (colors: {
+  background?: string;
+  border: any;
+  card: any;
+  primary?: string;
+  secondary?: string;
+  text: any;
+}) =>
+  StyleSheet.create({
+    container: {
+      backgroundColor: colors.card,
+      borderBottomColor: colors.border,
+      borderBottomWidth: 1,
+      borderLeftColor: colors.border,
+      borderLeftWidth: 1,
+      borderRightColor: colors.border,
+      borderRightWidth: 1,
+      borderTopColor: colors.border,
+      borderTopWidth: 1,
+      flex: 1,
+      marginBottom: 10,
+      marginLeft: 7,
+      marginRight: 7,
+      marginVertical: 10,
+      paddingHorizontal: 5,
+    },
+    postBody: {
+      color: colors.text,
+      fontSize: 12,
+    },
+    postTitle: {
+      color: colors.text,
+      fontSize: 20,
+      marginBottom: 10,
+    },
+  });
 
 export default PostDetails;

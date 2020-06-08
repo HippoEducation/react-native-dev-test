@@ -1,24 +1,28 @@
+import { StyleSheet, Text, TouchableOpacity } from 'react-native';
+
 import React from 'react';
-import { Text, TouchableOpacity, StyleSheet } from 'react-native';
 import moment from 'moment';
+import { useTheme } from '@react-navigation/native';
 
 type Props = {
-  title: string;
-  body: string;
   author: { id: string; name: string };
-  publishedAt: Date;
+  body: string;
   handleOnPressAuthor: (text: string) => void;
   handleOnPressPost: (body: string, title: string) => void;
+  title: string;
+  publishedAt: Date;
 };
 
 const PostItem: React.FC<Props> = ({
-  title,
-  body,
   author,
-  publishedAt,
+  body,
   handleOnPressAuthor,
-  handleOnPressPost
+  handleOnPressPost,
+  title,
+  publishedAt,
 }) => {
+
+  const { colors } = useTheme();
   const getSummary = (body: string): string => {
     let summary = body.substring(2, body.indexOf('##'));
     return summary.trim();
@@ -26,54 +30,68 @@ const PostItem: React.FC<Props> = ({
 
   return (
     <TouchableOpacity
-      style={styles.post}
+      style={styles(colors).post}
       onPress={() => handleOnPressPost(body, title)}
     >
-      <Text style={styles.postTitle}>{title}</Text>
+      <Text style={styles(colors).postTitle}>{title}</Text>
       <Text
         onPress={() => handleOnPressAuthor(author.name)}
-        style={styles.postAuthor}
+        style={styles(colors).postAuthor}
       >{`By: ${author.name}`}</Text>
-      <Text style={styles.postSummary}>{`Summary: ${getSummary(body)}`}</Text>
-      <Text style={styles.postDate}>{`Published: ${moment(publishedAt).format(
-        'DD MMM YYYY'
+      <Text style={styles(colors).postSummary}>{`Summary: ${getSummary(
+        body
       )}`}</Text>
+      <Text style={styles(colors).postDate}>{`Published: ${moment(
+        publishedAt
+      ).format('DD MMM YYYY')}`}</Text>
     </TouchableOpacity>
   );
 };
 
-const styles = StyleSheet.create({
-  post: {
-    flex: 1,
-    marginVertical: 10,
-    marginBottom: 10,
-    marginRight: 7,
-    marginLeft: 7,
-    paddingHorizontal: 5,
-    justifyContent: 'space-between',
-    borderTopWidth: 1,
-    borderTopColor: 'black',
-    borderBottomWidth: 1,
-    borderBottomColor: 'black',
-    borderLeftWidth: 1,
-    borderLeftColor: 'black',
-    borderRightWidth: 1,
-    borderRightColor: 'black',
-  },
-  postAuthor: {
-    bottom: 0,
-    fontSize: 15,
-    color: '#55c0fd',
-  },
-  postDate: {},
-  postSummary: {
 
-  },
-  postTitle: {
-    fontSize: 18,
-    flex: 1,
-    color: '#a697db',
-  },
-});
+const styles = (colors: {
+  background?: string;
+  border: any;
+  card: any;
+  primary?: string;
+  secondary?: string;
+  text: any;
+}) =>
+  StyleSheet.create({
+    post: {
+      backgroundColor: colors.card,
+      borderBottomColor: colors.border,
+      borderBottomWidth: 1,
+      borderLeftColor: colors.border,
+      borderLeftWidth: 1,
+      borderRightColor: colors.border,
+      borderRightWidth: 1,
+      borderTopColor: colors.border,
+      borderTopWidth: 1,
+      flex: 1,
+      justifyContent: 'space-between',
+      marginBottom: 10,
+      marginLeft: 7,
+      marginRight: 7,
+      marginVertical: 10,
+      paddingHorizontal: 5,
+    },
+    postAuthor: {
+      bottom: 0,
+      color: colors.secondary,
+      fontSize: 15,
+    },
+    postDate: {
+      color: colors.text,
+    },
+    postSummary: {
+      color: colors.text,
+    },
+    postTitle: {
+      color: colors.text,
+      fontSize: 18,
+      flex: 1,
+    },
+  });
 
 export default PostItem;
