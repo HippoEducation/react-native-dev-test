@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import {
-  Button,
+  ActivityIndicator,
   FlatList,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from 'react-native';
-import { Posts, Post } from '../types';
+import { Post } from '../../../api/src/data/posts'
 import PostItem from './postItem';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { HomeStackParamList } from '../HomeStackParamList';
@@ -17,36 +17,45 @@ type Props = {
 }
 
 const PostList: React.FC<Props> = ( {navigation} ) => {
-  const [posts, setPosts] = useState<Posts | null>();
+  const [postList, setPostList] = useState<Post[] | null>();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [displayingFilteredList, setDisplayingFilteredList] = useState<boolean>(
     false
   );
 
   const getPosts = async () => {
+    setIsLoading(true);
     try {
       let response = await fetch('http://localhost:4000/posts');
       let json = await response.json();
-      setPosts(json);
+      let sortedPosts = await sortPostsByPublishedAt(json);
+      setPostList(sortedPosts);
+      setIsLoading(false);
       return;
     } catch (error) {
       console.error(error);
     }
   };
 
+  const sortPostsByPublishedAt = (postsToSort: Post[]): Post[] => {
+    const sortedPosts = postsToSort.sort((a: Post, b: Post): number => {
+      return (
+        new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
+      );
+    });
+    return sortedPosts;
+  };
+
   useEffect(() => {
     getPosts();
   }, []);
 
-  useEffect(() => {
-    setPosts(posts);
-  }, [posts]);
-
   const searchFilterFunction = (text: string) => {
-    const filteredPosts = posts?.filter((post) => {
-      return post.author.name == text;
+    const filteredPosts = postList?.filter((singlePost: Post) => {
+      return singlePost.author.name == text;
     });
 
-    setPosts(filteredPosts);
+    setPostList(filteredPosts);
     setDisplayingFilteredList(true);
   };
 
@@ -69,15 +78,22 @@ const PostList: React.FC<Props> = ( {navigation} ) => {
 
   return (
     <View style={styles.container}>
+      {isLoading && (
+        <ActivityIndicator
+          animating={isLoading}
+          color="#a697db"
+          size="large"
+        />
+      )}
       <FlatList
         style={{ width: '100%' }}
-        data={posts}
+        data={postList}
         renderItem={({ item }: { item: Post }) => (
           <PostItem
             title={item.title}
             body={item.body}
             author={item.author}
-            publishedDate={item.publishedAt}
+            publishedAt={item.publishedAt}
             handleOnPressAuthor={searchFilterFunction}
             handleOnPressPost={handleOnPressPost}
           />

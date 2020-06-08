@@ -1,7 +1,3 @@
-import { Post } from './types';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RouteProp } from '@react-navigation/native';
-
 export type HomeStackParamList = {
   Home: undefined;
   Details: {

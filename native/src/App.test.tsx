@@ -1,11 +1,8 @@
 import React from 'react';
 import renderer, { act, create } from 'react-test-renderer';
 
-
 import { App } from './App';
-import PostDetails from './components/PostDetails';
 import PostItem from './components/postItem';
-import PostList from './components/postList';
 
 const mockPostData = [
   {
@@ -37,7 +34,7 @@ describe('<PostComponent />', () => {
           title={mockPostData[0].title}
           author={mockPostData[0].author}
           body={mockPostData[0].body}
-          publishedDate={mockPostData[0].published}
+          publishedAt={mockPostData[0].published}
           handleOnPressAuthor={mockPostData[0].handleOnPressAuthor}
           handleOnPressPost={mockPostData[0].handleOnPressPost}
         />
@@ -48,56 +45,40 @@ describe('<PostComponent />', () => {
   });
 });
 
-describe('<PostList />', () => {
-  test('renders correctly!', () => {
-    const tree = renderer.create(<PostList />).toJSON();
-    expect(tree).toMatchInlineSnapshot(`
-      <View
-        style={
-          Object {
-            "flex": 1,
-          }
-        }
-      >
-        <RCTScrollView
-          disableVirtualization={false}
-          getItem={[Function]}
-          getItemCount={[Function]}
-          horizontal={false}
-          initialNumToRender={10}
-          keyExtractor={[Function]}
-          maxToRenderPerBatch={10}
-          numColumns={1}
-          onContentSizeChange={[Function]}
-          onEndReachedThreshold={2}
-          onLayout={[Function]}
-          onMomentumScrollEnd={[Function]}
-          onScroll={[Function]}
-          onScrollBeginDrag={[Function]}
-          onScrollEndDrag={[Function]}
-          removeClippedSubviews={false}
-          renderItem={[Function]}
-          scrollEventThrottle={50}
-          stickyHeaderIndices={Array []}
-          style={
-            Object {
-              "width": "100%",
-            }
-          }
-          updateCellsBatchingPeriod={50}
-          viewabilityConfigCallbackPairs={Array []}
-          windowSize={21}
-        >
-          <View />
-        </RCTScrollView>
-      </View>
-    `);
-  });
-});
-
+//TODO: I couldn't get this to work with typescript and passing in the route props. 
+//I would love any feedback on this part because I'm stumped
 describe('<PostDetails />', () => {
-  test('it renders correctly when there are multiple items', () => {
-    //TODO: figure out how to pass in navigation and route props to testing
+  test('it renders correctly when there is one item passed', () => {
 
+    // const params = {
+    //   route: {
+    //     params: {
+    //       title: 'Hey',
+    //       body: 'Testteststst',
+    //     },
+    //   },
+    // };
+    // const tree = renderer.create(<PostDetails route={route: RouteProp<params, "Details">} />)
+    // expect(tree).toMatchSnapshot();
   });
+
+    // test('it renders correctly when there are multiple items passed', () => {
+    //   const params = {
+    //     route1: {
+    //       params: {
+    //         title: 'Hey',
+    //         body: 'Testteststst',
+    //       },
+    //     },
+    //     route2: {
+    //       params: {
+    //         title: 'Yo',
+    //         body: 'Testtestststtest',
+    //       },
+    //     },
+    //   };
+    //   const tree = renderer.create(<PostDetails route={route: RouteProp<params, "Details">} />)
+    //   expect(tree).toMatchSnapshot();
+    // });
+
 });

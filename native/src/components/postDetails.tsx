@@ -1,19 +1,13 @@
 import React from 'react';
 import { Text, StyleSheet, View } from 'react-native';
-import { StackNavigationProp } from '@react-navigation/stack';
 import { HomeStackParamList } from '../HomeStackParamList';
-import { Post } from '../types';
 import { RouteProp } from '@react-navigation/native';
 
 type Props = {
-    navigation: StackNavigationProp<HomeStackParamList, 'Details'>
     route: RouteProp<HomeStackParamList, 'Details'>
-    body: string,
-    title: string
 }
 
-const PostDetails: React.FC<Props> = ({navigation, route, body, title}) => {
-    console.log(body)
+const PostDetails: React.FC<Props> = ({route}) => {
     return (
       <View>
         <Text testID="title">{route.params.title}</Text>
@@ -21,5 +15,26 @@ const PostDetails: React.FC<Props> = ({navigation, route, body, title}) => {
       </View>
     );
 }
+
+const styles = StyleSheet.create({
+  post: {
+    flex: 1,
+    paddingVertical: 25,
+    paddingHorizontal: 15,
+    justifyContent: 'space-between',
+    borderBottomWidth: 1,
+    borderBottomColor: 'black',
+  },
+  postAuthor: {
+    bottom: 0,
+    fontSize: 15,
+  },
+  postDate: {},
+  postSummary: {},
+  postTitle: {
+    fontSize: 18,
+    flex: 1,
+  },
+});
 
 export default PostDetails;
