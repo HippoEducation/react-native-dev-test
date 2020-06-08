@@ -6,8 +6,7 @@ import PostList from './components/postList';
 export function App() {
   return (
     <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <PostList count={56} />
+      <PostList />
     </View>
   );
 }

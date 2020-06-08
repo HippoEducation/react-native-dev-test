@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { Text } from 'react-native';
+import { FlatList, StyleSheet, View } from 'react-native';
+import {Posts, Post} from '../types';
+import PostItem from './postItem';
 
-type Props = {
-  count: number;
-};
+const PostList: React.FC = () => {
+  const [posts, setPosts] = useState<Posts | null>();
 
-const PostList: React.FC<Props> = (props) => {
-  const [posts, setPosts] = useState();
   const getPosts = async () => {
     try {
-      let response = await fetch('http://192.168.0.105:4000/posts');
+      let response = await fetch('http://localhost:4000/posts');
       let json = await response.json();
       setPosts(json);
       return;
@@ -23,10 +22,32 @@ const PostList: React.FC<Props> = (props) => {
   }, []);
 
   useEffect(() => {
-    console.log(posts);
+    setPosts(posts);
   }, [posts]);
 
-  return <Text>Count {props.count}</Text>;
-};
+  return (
+    <View style={styles.container}>
+      <FlatList
+        style={{ width: '100%' }}
+        data={posts}
+        renderItem={({ item }: { item: Post }) => (
+          <PostItem
+            title={item.title}
+            body={item.body}
+            author={item.author}
+            publishedDate={item.publishedAt}
+          />
+        )}
+        keyExtractor={(item) => item.id}
+      />
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  }
+});
 
 export default PostList;
