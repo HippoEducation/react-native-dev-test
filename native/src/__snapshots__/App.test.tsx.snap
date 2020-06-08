@@ -1,0 +1,59 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<PostComponent /> check to make sure nothing extra is rendered in PostItem component 1`] = `
+<View
+  accessible={true}
+  focusable={false}
+  isTVSelectable={true}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Object {
+      "borderBottomColor": "black",
+      "borderBottomWidth": 1,
+      "flex": 1,
+      "justifyContent": "space-between",
+      "opacity": 1,
+      "paddingHorizontal": 15,
+      "paddingVertical": 25,
+    }
+  }
+>
+  <Text
+    style={
+      Object {
+        "flex": 1,
+        "fontSize": 18,
+      }
+    }
+  >
+    Harry Potter and the Sorcerer's Stone
+  </Text>
+  <Text
+    onPress={[Function]}
+    style={
+      Object {
+        "bottom": 0,
+        "fontSize": 15,
+      }
+    }
+  >
+    By: JK Rowling
+  </Text>
+  <Text
+    style={Object {}}
+  >
+    Summary: #
+  </Text>
+  <Text
+    style={Object {}}
+  >
+    Published: 08 Jun 2020
+  </Text>
+</View>
+`;

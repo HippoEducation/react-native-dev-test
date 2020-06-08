@@ -7,18 +7,22 @@ type Props = {
   body: string;
   author: { id: string; name: string };
   publishedDate: Date;
+  onPress: (text: string) => void;
 };
 
-const PostItem: React.FC<Props> = ({ title, body, author, publishedDate }) => {
+const PostItem: React.FC<Props> = ({ title, body, author, publishedDate, onPress }) => {
   const getSummary = (body: string): string => {
     let summary = body.substring(2, body.indexOf('##'));
     return summary.trim();
   };
 
   return (
-    <TouchableOpacity onPress={() => console.log('wtf')} style={styles.post}>
+    <TouchableOpacity style={styles.post}>
       <Text style={styles.postTitle}>{title}</Text>
-      <Text style={styles.postAuthor}>{`By: ${author.name}`}</Text>
+      <Text
+        onPress={() => onPress(author.name)}
+        style={styles.postAuthor}
+      >{`By: ${author.name}`}</Text>
       <Text style={styles.postSummary}>{`Summary: ${getSummary(body)}`}</Text>
       <Text style={styles.postDate}>{`Published: ${moment(publishedDate).format(
         'DD MMM YYYY'
