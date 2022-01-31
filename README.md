@@ -17,25 +17,23 @@ Using the provided Expo application in `/native`:
 
  1. Fetch post data from the provided Express API.
  2. Display a list of posts. Include the post title, summary, author, and
-    publish date in the list.
+		publish date in the list.
  3. The list of posts should be displayed in reverse chronological order.
  4. Also list each unique author. Make touching an author filter the list of
-    posts by the selected author.
- 5. Make each post in the list touchable. When you touch a post, navigate to
-    a new screen showing the formatted post body and title.
+		posts by the selected author.
+ 5. Make each post in the list touchable. When you touch a post, navigate to a
+		new screen showing the formatted post body and title. The post body is
+		formatted as Markdown.
  6. Include a way to return to the main screen with posts and authors.
- 7. Include some platform-specific variation between iOS and Android on either
-    the main screen or the post screen.
- 8. Implement tests using Jest for your components. Jest is installed in the
-    Expo project and can be run from the `native/` folder with `yarn test`.
-    We are most interested in your overall approach to testing -- e.g. what
-    you choose to test -- not the exact implementation of your tests. If you're
-    new to testing or are having trouble, we'd prefer to see a full suite of
-    dummy tests that outline a good testing strategy than 1 or 2 working tests
-    that don't really test anything of substance.
+ 7. Create a test suite for your components. Jest is installed in the Expo
+		project and can be run from the `native/` folder with `yarn test`. You do
+		NOT need to actually implement the tests, just enough description, comments
+		and/or pseudocode to make clear the purpose of each test. We're looking to
+		understand how you approach testing and how you think about the failure
+		state of your code. We're not interested in making you spend your time
+		struggling with potentially unfamiliar apis for a job application.
 
-The post body is formatted as Markdown and the post screen should use the
-formatted Markdown.
+
 
 ### (B) Code Review
 
@@ -44,23 +42,22 @@ Using the sample application in `/review`:
  1. Run the Expo application.
  2. Review the React Native code.
  3. Make suggestions on how the example application could be improved. For this
-    exercise your suggestions may apply to an entire application, file, or
-    lines of code. If appropriate, please prefix your suggestions with
-    `filename:line` so we know to what code you are referring.
+		exercise your suggestions may apply to an entire application, file, or lines
+		of code. You may use github PRs to do this, or if you prefer, a list of
+		notes specifying enough information (file/line number) that we know to what
+		code you are referring.
 
 Environment
 -----------
-You can use any stable version of Node JS. The base project is written using
+You can use any stable version of Node JS. The base project is configured to use
 TypeScript but you may use vanilla JavaScript to complete the tasks.
 
 Coding Standard
 ---------------
-Please use [Prettier](https://prettier.io/)
-for your code. If your editor is not already configured to use Prettier, you can format code
-in the project using:
-```sh
-yarn prettier-write
-```
+Please use [Prettier](https://prettier.io/) for your code. If your editor is not
+already configured to use Prettier, you can format code in the project using:
+
+```sh yarn prettier-write ```
 
 Dependencies
 ------------
